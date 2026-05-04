@@ -5,6 +5,7 @@ import { useState, useEffect, use } from "react";
 interface Idea {
   id: number;
   text: string;
+  createdAt: string;
 }
 
 export default function Home() {
@@ -49,14 +50,16 @@ export default function Home() {
   };
 
   useEffect(() => {
-    fetchIdeas()
+    fetchIdeas();
   }, []);
 
   return (
     <main className="min-h-screen bg-gray-50 p-8 flex justify-center font-sans">
       <div className="w-full max-w-md bg-white p-6 rounded-xl shadow-md border border-gray-100 h-fit">
         <h1 className="text-2xl font-bold text-gray-800 mb-2">💡 QuickIdeas</h1>
-        <p className="text-gray-500 mb-6 text-sm">Catat ide brilianmu sebelum hilang!</p>
+        <p className="text-gray-500 mb-6 text-sm">
+          Catat ide brilianmu sebelum hilang!
+        </p>
 
         <form onSubmit={addIdea} className="flex gap-2 mb-6">
           <input
@@ -78,19 +81,24 @@ export default function Home() {
 
         <ul className="space-y-3">
           {ideas.length === 0 ? (
-            <p className="text-center text-gray-400 text-sm mt-8">Belum ada ide. Ayo tambahkan!</p>
+            <p className="text-center text-gray-400 text-sm mt-8">
+              Belum ada ide. Ayo tambahkan!
+            </p>
           ) : (
             ideas.map((idea) => (
               <li
                 key={idea.id}
                 className="bg-gray-50 p-4 rounded-lg border border-gray-100 text-gray-700 shadow-sm"
               >
-                {idea.text}
+                <div className="font-medium">{idea.text}</div>
+                <div className="text-xs text-gray-500">
+                  Dibuat: {idea.createdAt}
+                </div>
               </li>
             ))
           )}
         </ul>
       </div>
     </main>
-  )
+  );
 }
